@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Book = require("../models/Book");
 
 mongoose.connect("mongodb://localhost/library-project", {
   useNewUrlParser: true
@@ -76,3 +77,12 @@ const books = [
     rating: 8
   }
 ];
+
+Book.insertMany(books)
+  .then(data => {
+    console.log(`Created ${data.length} books`);
+    mongoose.connection.close();
+  })
+  .catch(err => {
+    console.log("Error while creating the books: ", err);
+  });
