@@ -12,10 +12,33 @@
     <form action="/users" method="POST">
         <label for="username">Username: </label>
         <input name="username" type="text" />
+
         <label for="password">Password: </label>
         <input name="password" type="password" />
+
         <label for="birthdate">Birthdate: </label>
         <input type="date" name="birthdate">
+
+        <label for="firstName">First name: </label>
+        <input type="text" name="firstName" />
+
+        <label for="age">Age: </label>
+        <input type="number" name="age" />
+
+        <label for="role">Role: </label>
+        <select required name="role">
+            <option selected disabled>Select a role</option>
+            <option value="user">User</option>
+            <option value="mod">Mod</option>
+            <option value="admin">Admin</option>
+        </select>
+
+        <label for="isActive">Active ?</label>
+        <input type="checkbox" name="isActive" />
+
+        <label for="email">E-mail: </label>
+        <input required type="email" name="email">
+
         <button type="submit">Add a user</button>
     </form>
 </body>
