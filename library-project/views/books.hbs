@@ -1,4 +1,7 @@
 <h1>Books</h1>
 {{#each books}}
-<p><a href="/books/{{_id}}">{{title}}</a></p>
+<p>
+  <a href="/books/{{_id}}">{{title}}</a>
+  <a href="/books/edit/{{_id}}" class="edit-button">Edit</a>
+</p>
 {{/each}}
