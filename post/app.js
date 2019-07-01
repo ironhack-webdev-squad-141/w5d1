@@ -13,26 +13,29 @@ const greetOnRequest = greeting => {
   };
 };
 
-app.use(greetOnRequest("Hello there is a new request"));
+// app.use(greetOnRequest("Hello there is a new request"));
 
-app.use(greetOnRequest("Can you see this?"));
+// app.use(greetOnRequest("Can you see this?"));
 
 const toLowerCase = () => {
   return (req, res, next) => {
-    //code here
+    for (const key in req.body) {
+      req.body[key] = req.body[key].toLowerCase();
+    }
+    next();
   };
 };
 
-app.use(toLowerCase());
+// app.use(toLowerCase());
 
 app.get("/", (req, res) => {
-  console.log("secret key: ", req.secretKey);
+  //   console.log("secret key: ", req.secretKey);
   res.render("index");
 });
 
-app.post("/users", (req, res) => {
-  console.log(req.body);
-  //   res.send(req.body);
+app.post("/users", toLowerCase(), (req, res) => {
+  //   console.log(req.body);
+  res.send(req.body);
 });
 
 app.listen(3000);
