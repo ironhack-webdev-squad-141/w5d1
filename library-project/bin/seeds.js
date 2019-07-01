@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Book = require("../models/Book");
+const Author = require("../models/Author");
 
 mongoose.connect("mongodb://localhost/library-project", {
   useNewUrlParser: true
@@ -149,6 +150,26 @@ const books = [
 
 // Create all the Authors documents in the database
 // Create all the Books documents in the database, by making sure that their `author` field has the object id for the author
+
+const authors = books.map(book => book.author);
+
+Author.insertMany(authors)
+  .then(authorsFromDB => {
+    const booksForDB = books.map(book => {
+      const authorId = authorsFromDB.find(
+        author => author.lastName === book.author.lastName
+      )._id;
+
+      return { ...book, author: authorId };
+    });
+    return Book.insertMany(booksForDB).then(data => {
+      console.log(`Successfully inserted ${data.length} books`);
+      mongoose.connection.close();
+    });
+  })
+  .catch(err => {
+    console.log("Error while seeding the DB: ", err);
+  });
 
 /*
 Book.insertMany(books)

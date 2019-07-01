@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Book = require("../models/Book");
+const Author = require("../models/Author");
 
 /* GET home page */
 router.get("/", (req, res) => {
@@ -35,6 +36,7 @@ router.post("/books/add", (req, res) => {
 
 router.get("/books/edit/:bookId", (req, res) => {
   Book.findById(req.params.bookId)
+    .populate("author")
     .then(book => {
       res.render("book-edit", { book });
     })
@@ -63,8 +65,10 @@ router.post("/books/edit/:bookId", (req, res) => {
 router.get("/books/:bookId", (req, res) => {
   // get the information for the book whose id is bookId from the database
   Book.findById(req.params.bookId)
+    .populate("author")
     .then(book => {
-      res.render("book-details", { book });
+      res.send(book);
+      // res.render("book-details", { book });
     })
     .catch(err => {
       console.log("Error while retrieving the book: ", err);
